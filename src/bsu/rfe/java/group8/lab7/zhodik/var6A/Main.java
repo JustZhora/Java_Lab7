@@ -172,7 +172,23 @@ public class Main extends JFrame {
             final String senderName = textFieldFrom.getText();
             final String destinationAddress = textFieldTo.getText();
             final String message = textAreaOutgoing.getText();
-
+//Проверка корректности IP-адреса
+            String[] ipArr = destinationAddress.split("\\.");
+            if(ipArr.length != 4) {
+                JOptionPane.showMessageDialog(this, "IP-адрес введен неверно!" ,
+                        "Ошибка", JOptionPane.ERROR_MESSAGE);
+                textFieldTo.requestFocusInWindow();
+                return;
+            }
+            for(String ipValue : ipArr){
+                int i = Integer.parseInt(ipValue);
+                if(( i < 0 ) || ( i > 255 )) {
+                    JOptionPane.showMessageDialog(this, "IP-адрес введен неверно!" ,
+                            "Ошибка", JOptionPane.ERROR_MESSAGE);
+                    textFieldTo.requestFocusInWindow();
+                    return;
+                }
+            }
             // Убеждаемся, что поля не пустые
             if (senderName.isEmpty()) {
                 JOptionPane.showMessageDialog(this,
